@@ -20,6 +20,8 @@ Members模块
 <a href="/sns/oauth/wechat?callback=<?php echo $redirect;?>" class="wx">微信</a>
 <a href="/sns/oauth/weibo?callback=<?php echo $redirect;?>" class="wb">微博</a>
 
+&lt;a href="/sns/oauth/qq?callback=&lt;?php echo $redirect;?&gt;" class="qq"&gt;QQ&lt;/a&gt;<br />&lt;a href="/sns/oauth/wechat?callback=&lt;?php echo $redirect;?&gt;" class="wx"&gt;微信&lt;/a&gt;<br />&lt;a href="/sns/oauth/weibo?callback=&lt;?php echo $redirect;?&gt;" class="wb"&gt;微博&lt;/a&gt;
+
 2)支付
 <form method="post" action="/orders/create?redirect=<?php echo $redirect;?>" class="form-box">
     <input type="hidden" name="product_id" id="product_id" value="0" />
@@ -31,3 +33,5 @@ Members模块
     <input type="hidden" name="product_name" id="product_name" value="订单名称" />
     <input type="hidden" name="product_description" id="product_description" value="订单描述" />
 </form>
+
+&lt;form method="post" action="/orders/create?redirect=&lt;?php echo $redirect;?&gt;" class="form-box"&gt;<br /> &lt;input type="hidden" name="product_id" id="product_id" value="0" /&gt;<br /> &lt;input type="hidden" name="item_id" id="item_id" value="0" /&gt;<br /> &lt;input type="hidden" name="price" id="price" value="0.01" /&gt;<br /> &lt;input type="hidden" name="quantity" id="quantity" value="1" /&gt;<br /> &lt;input type="hidden" name="total_fee" id="total_fee" value="0.01" /&gt;<br /> &lt;input type="hidden" name="pay_module" id="pay_module" value="wechat" /&gt;<br /> &lt;input type="hidden" name="product_name" id="product_name" value="订单名称" /&gt;<br /> &lt;input type="hidden" name="product_description" id="product_description" value="订单描述" /&gt;<br />&lt;/form&gt;
