@@ -2,10 +2,15 @@
 一个WordPress插件
 
 集成SNS登录组件(微信,微薄,QQ,短信), 
+
 Pay组件(支付宝,微信支付), 
+
 Activity留言模块, 
+
 Notification通知模块, 
+
 Votes投票模块
+
 Members模块
 =========================
 ## 安装并激活.
@@ -15,10 +20,11 @@ Members模块
 
 ##在您的模板中使用
 1)SNS登录
-
+``` HTML
 <a href="/sns/oauth/qq?callback=<?php echo $redirect;?>" class="qq">QQ</a>
 <a href="/sns/oauth/wechat?callback=<?php echo $redirect;?>" class="wx">微信</a>
 <a href="/sns/oauth/weibo?callback=<?php echo $redirect;?>" class="wb">微博</a>
+``` 
 
 &lt;a href="/sns/oauth/qq?callback=&lt;?php echo $redirect;?&gt;" class="qq"&gt;QQ&lt;/a&gt;<br />&lt;a href="/sns/oauth/wechat?callback=&lt;?php echo $redirect;?&gt;" class="wx"&gt;微信&lt;/a&gt;<br />&lt;a href="/sns/oauth/weibo?callback=&lt;?php echo $redirect;?&gt;" class="wb"&gt;微博&lt;/a&gt;
 
