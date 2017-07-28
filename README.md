@@ -38,6 +38,18 @@ Members模块
     <input type="hidden" name="product_description" id="product_description" value="订单描述" />
 </form>
 ``` 
+3) 微信分享代码
+```PHP
+<?php
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$link = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$title = wp_title( '&lsaquo;', false, 'right' );
+$desc = gp_get_description();
+$icon = '';
+gp_wechat_share( $link, $title, $desc, $icon );
+?>
+
+```
 
 ## 感谢
 感谢BuddyPress. 插件的实现机制跟BuddyPress一样,并且部分代码来至BuddyPress
