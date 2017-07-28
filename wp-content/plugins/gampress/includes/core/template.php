@@ -449,12 +449,13 @@ function gp_description() {
             $secondary_nav_item = $gp->{$component_id}->current_item;
 
             $temp = strip_tags( $secondary_nav_item->description );
+            $temp = str_replace(array("\r\n", "\r", "\n"), "", $temp);
             $temp = mb_substr( $temp, 0, 250 );
 
             if ( empty($desc) )
                 $desc = $temp;
             else
-                $desc .= ',' . $temp;
+                $desc = $temp . $desc;
         }
 
         return $desc;

@@ -116,7 +116,7 @@ function sns_autologin( $sns_name, &$sns_user, $redirect = false ) {
             $new_user = array(
                 'user_login'     => $user_login,
                 'display_name'   => $display_name,
-                'user_nicename'  => $display_name,
+                'user_nicename'  => $user_login,
                 'user_pass'      => $random_password
             );
             $user_id = wp_insert_user( $new_user );

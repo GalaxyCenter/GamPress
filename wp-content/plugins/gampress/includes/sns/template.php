@@ -129,3 +129,49 @@ function gp_sns_qq_redirect_uri() {
     function gp_get_sns_qq_redirect_uri() {
         return sprintf( '%s/%s/oauth_callback/qq', gp_get_root_domain(), gp_get_sns_slug() );
     }
+
+function gp_sns_wechat_config( $link ) {
+    $config = gp_get_sns_wechat_config( $link );
+
+    echo json_encode( $config );
+}
+    function gp_get_sns_wechat_config( $link ) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $nonceStr = "";
+        for ($i = 0; $i < 16; $i++) {
+            $nonceStr .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+        }
+
+        $appid  = gp_get_sns_wechat_app_id();
+        $secret = gp_get_sns_wechat_app_secret();
+
+        $cache_key = 'wechat_js_ticket';
+        $ticket = wp_cache_get( $cache_key );
+        if ( empty( $ticket ) ) {
+            $resp = http_request( "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}", 'GET' );
+            $res = json_decode( $resp );
+            $access_token = $res->access_token;
+
+            $resp = http_request( "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={$access_token}", 'GET' );
+            $res = json_decode( $resp );
+            $ticket = $res->ticket;
+
+            wp_cache_set( $cache_key, $ticket, 'wechat_ticket', 7000 );
+        }
+
+        $timestamp = time();
+        $string = "jsapi_ticket={$ticket}&noncestr={$nonceStr}&timestamp={$timestamp}&url={$link}";
+        $signature = sha1($string);
+
+        $signPackage = array(
+            "debug"     => false,
+            "appId"     => $appid,
+            "nonceStr"  => $nonceStr,
+            "timestamp" => $timestamp,
+            "url"       => $link,
+            "signature" => $signature,
+            "rawString" => $string,
+            "jsApiList" => array( 'onMenuShareTimeline', 'onMenuShareAppMessage' )
+        );
+        return $signPackage;
+    }

@@ -931,5 +931,5 @@ function gp_get_metadata($meta_type, $object_id, $meta_key = '', $default_value 
     if ($single)
         return $default_value;
     else
-        return array();
+        return (array) $default_value;
 }
