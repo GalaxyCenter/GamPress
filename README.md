@@ -95,7 +95,24 @@ function gp_books_sns_sub_proc_text( $content, $object ) {
 }
 add_filter( 'gp_wehchats_precess_text', 'gp_books_sns_sub_proc_text', 10, 2 );
 ```
+5) 微信发红包功能
+先将微信的3个pcm文件放入到 wp-content\plugins\gampress\includes\pays\libs\wechat\pem 目录下
 
+```PHP
+$send_pack_fee = 0.01;// 1分钱
+$pay = new GP_Pays_Wechat_Pack();
+        $result = $pay->do_pay( array(
+            'order_id'          => $order_id,
+            'sender'            => gp_games_activities_get_meta( $activity_id, 'wechat_pack_sender', true ),  // 发红包的人名称
+            'product_fee'       => $send_pack_fee * 100,
+            'wishing'           => gp_games_activities_get_meta( $activity_id, 'wechat_pack_wishing', true ), // 祝福语
+            'product_name'      => gp_games_activities_get_meta( $activity_id, 'wechat_pack_wishing', true ), // 祝福语
+            'wxappid'           => gp_games_activities_get_meta( $activity_id, 'wechat_app_id', true ), // 发红号的app id
+            'mch_id'            => gp_games_activities_get_meta( $activity_id, 'wechat_mch_id', true ), // 商户号,在后台设置
+            'wechat_key'        => gp_games_activities_get_meta( $activity_id, 'wechat_key', true ) // 商户key
+        ) );
+
+```
 ## 感谢
 感谢BuddyPress. 插件的实现机制跟BuddyPress一样,并且部分代码来至BuddyPress
 
