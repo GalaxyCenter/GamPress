@@ -15,7 +15,7 @@ class GP_Sns_OAuth_Weibo extends GP_Sns_Api {
         $this->app_secre         = gp_get_sns_weibo_app_secret();
     }
 
-    public function request_authorize_code( $callback = '' ) {
+    public function request_authorize_code( $callback = '', $scope = '' ) {
         $this->redirect_url   = urlencode( gp_get_root_domain() . '/' . gp_get_sns_slug() . '/oauth_callback/weibo' );
         $url = "https://api.weibo.com/oauth2/authorize?client_id={$this->app_id}&redirect_uri={$this->redirect_url}&response_type=code";
 
@@ -24,8 +24,12 @@ class GP_Sns_OAuth_Weibo extends GP_Sns_Api {
 
     public function request_access_token() {
         $this->redirect_url   = urlencode( gp_get_root_domain() . '/' . gp_get_sns_slug() . '/oauth_callback/weibo' );
-        $url = "https://api.weibo.com/oauth2/access_token?client_id={$this->app_id}&client_secret={$this->app_secre}&grant_type=authorization_code&code={$this->code}&redirect_uri={$this->redirect_url}";
-        $json = json_decode( http_request( $url, 'POST' ) );
+        $url = 'https://api.weibo.com/oauth2/access_token';
+        $data = "client_id={$this->app_id}&client_secret={$this->app_secre}&grant_type=authorization_code&code={$this->code}&redirect_uri={$this->redirect_url}";
+        $resp = http_request( $url, 'POST', $data );
+
+        GP_Log::INFO( 'weibo url:' . $url . '  resp:' . $resp );
+        $json = json_decode( $resp );
 
         $this->access_token = $json->access_token;
         $this->user_id = $json->uid;

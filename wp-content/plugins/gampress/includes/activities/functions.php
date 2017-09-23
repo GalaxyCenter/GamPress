@@ -10,13 +10,18 @@ function gp_activities_get_activities( $args = '' ) {
     if ( empty( $args ) )
         return false;
 
+    if ( !isset( $args['item_id'] ) )
+        $args['item_id'] = 0;
+
     $key = 'gp_activities_' . join( '_', $args );
-    $datas = wp_cache_get( $key );
+    $group = 'gp_activities_' . $args['item_id'];
+
+    $datas = wp_cache_get( $key, $group );
     if ( empty( $datas ) ) {
         $datas = GP_Activities_Activity::get( $args );
 
         if ( !empty( $datas['items'] ) )
-            wp_cache_set( $key, $datas );
+            wp_cache_set( $key, $datas, $group );
     }
     return $datas;
 }
@@ -49,6 +54,7 @@ function gp_activities_add( $args = '' ) {
         'content'       => false,
         'item_id'       => false,
         'parent_id'     => false,
+        'status'        => GP_ACTIVITY_APPROVED,
         'post_time'     => time() ) ;
 
     $r = wp_parse_args( $args, $defaults );
@@ -71,12 +77,15 @@ function gp_activities_add( $args = '' ) {
     $activity->item_id      = $item_id;
     $activity->parent_id    = $parent_id;
     $activity->post_time    = $post_time;
+    $activity->status       = $status;
     $activity->type         = $type;
 
     if ( !$activity->save() )
         return $activity;
 
-    wp_cache_set( 'gp_activity_' . $activity->id, $activity, 'gp_activities' );
+    $group = 'gp_activities_' . $item_id;
+    wp_cache_clean( $group );
+    wp_cache_set( 'gp_activity_' . $activity->id, $activity );
 
     return $activity->id;
 }
@@ -107,4 +116,8 @@ function gp_activities_user_is_liked( $user_id, $activity_id ) {
     $meta_key = 'activity_like_' . $user_id;
 
     return !empty( gp_activities_get_meta( $activity_id, $meta_key ) );
+}
+
+function gp_activities_activity_disapproved( $id ) {
+    GP_Activities_Activity::update_status( $id, GP_ACTIVITY_DISAPPROVED );
 }

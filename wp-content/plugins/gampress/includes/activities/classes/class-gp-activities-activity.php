@@ -19,6 +19,7 @@ class GP_Activities_Activity {
     public $parent_id;
     public $likes;
     public $post_time;
+    public $status;
 
     public function __construct( $id = null, $args = array() ) {
         if ( !empty( $id ) ) {
@@ -48,6 +49,7 @@ class GP_Activities_Activity {
         $this->parent_id    = (int) $activity->parent_id;
         $this->likes        = (int) $activity->likes;
         $this->post_time    = $activity->post_time;
+        $this->status       = (int) $activity->status;
     }
 
     public function save() {
@@ -59,13 +61,13 @@ class GP_Activities_Activity {
                 "UPDATE {$gp->activities->table_name_activities} SET
                             user_id = %d, component = %s, `type` = %s,
                             content = %s, item_id = %d, parent_id = %d,
-                            post_time = %s, likes = %d
+                            post_time = %s, likes = %d, status = %d
                         WHERE
                             id = %d
                         ",
                 $this->user_id, $this->component, $this->type,
                 $this->content, $this->item_id, $this->parent_id,
-                $this->post_time, $this->likes,
+                $this->post_time, $this->likes, $this->status,
                 $this->id
             );
         } else {
@@ -73,13 +75,13 @@ class GP_Activities_Activity {
                 "INSERT INTO {$gp->activities->table_name_activities} (
                         user_id, component, `type`,
                         content, item_id, parent_id,
-                        post_time, likes
+                        post_time, likes, status
                     ) VALUES(%d, %s, %s,
                     %s, %d, %d,
-                    %s, %d)",
+                    %s, %d, %d)",
                 $this->user_id, $this->component, $this->type,
                 $this->content, $this->item_id, $this->parent_id,
-                $this->post_time, $this->likes
+                $this->post_time, $this->likes, $this->status
             );
         }
 
@@ -104,6 +106,7 @@ class GP_Activities_Activity {
             'component'     => false,
             'item_id'       => false,
             'parent_id'     => false,
+            'status'        => false,
             'order'         => 'DESC',
             'orderby'       => 'post_time',
             'page'          => 1,
@@ -113,7 +116,7 @@ class GP_Activities_Activity {
         $r = wp_parse_args($args, $defaults);
 
         $sql = array(
-            'select' => "SELECT DISTINCT a.id",
+            'select' => "SELECT DISTINCT a.*",
             'from' => "{$gp->activities->table_name_activities} a",
             'where' => '',
             'orderby' => '',
@@ -126,8 +129,37 @@ class GP_Activities_Activity {
             $search = trim($r['search_terms']);
         }
 
+        if ( $search ) {
+            $leading_wild = ( ltrim( $search, '*' ) != $search );
+            $trailing_wild = ( rtrim( $search, '*' ) != $search );
+            if ( $leading_wild && $trailing_wild ) {
+                $wild = 'both';
+            } elseif ( $leading_wild ) {
+                $wild = 'leading';
+            } elseif ( $trailing_wild ) {
+                $wild = 'trailing';
+            } else {
+                // Default is to wrap in wildcard characters.
+                $wild = 'both';
+            }
+            $search = trim( $search, '*' );
+
+            $searches = array();
+            $leading_wild = ( 'leading' == $wild || 'both' == $wild ) ? '%' : '';
+            $trailing_wild = ( 'trailing' == $wild || 'both' == $wild ) ? '%' : '';
+            $wildcarded = $leading_wild . gp_esc_like( $search ) . $trailing_wild;
+            $searches[] = $wpdb->prepare( "content LIKE %s", $wildcarded );
+            $where_conditions['search'] = '(' . implode(' OR ', $searches) . ')';
+        }
+
+        if ( !empty( $r['user_id'] ) )
+            $where_conditions[] = $wpdb->prepare( " a.user_id = %s", $r['user_id'] );
+
         if ( !empty( $r['type'] ) )
             $where_conditions[] = $wpdb->prepare( " a.type = %s", $r['type'] );
+
+        if ( !empty( $r['status'] ) )
+            $where_conditions[] = $wpdb->prepare( " a.status = %s", $r['status'] );
 
         if ( !empty( $r['component'] ) )
             $where_conditions[] = $wpdb->prepare( " a.component = %s", $r['component'] );
@@ -165,11 +197,7 @@ class GP_Activities_Activity {
 
         // Get paginated results
         $paged_items_sql = "{$sql['select']} FROM {$sql['from']} {$where} {$sql['orderby']} {$sql['pagination']}";
-        $paged_item_ids = $wpdb->get_col( $paged_items_sql );
-        $paged_items = array();
-        foreach ( $paged_item_ids as $paged_item_id ) {
-            $paged_items[] = new GP_Activities_Activity( $paged_item_id );
-        }
+        $paged_items = $wpdb->get_results( $paged_items_sql );
 
         $total_items_sql = "SELECT COUNT(DISTINCT a.id) FROM {$sql['from']} $where";
         $total_items     = $wpdb->get_var( $total_items_sql );
@@ -184,7 +212,7 @@ class GP_Activities_Activity {
 
         switch ( $orderby ) {
             case 'likes' :
-                $order_by_term = 'a.likes';
+                $order_by_term = 'a.likes DESC, a.id';
                 break;
             case 'post_time' :
             default :
@@ -194,4 +222,12 @@ class GP_Activities_Activity {
 
         return $order_by_term;
     }
+
+    public static function update_status( $id, $status ) {
+        global $wpdb;
+
+        $gp = gampress();
+        $wpdb->query( $wpdb->prepare( "UPDATE {$gp->activities->table_name_activities} SET status = %d WHERE id = %d", $status, $id ) );
+    }
+
 }

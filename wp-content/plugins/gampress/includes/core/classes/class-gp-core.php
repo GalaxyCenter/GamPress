@@ -35,7 +35,7 @@ class GP_Core extends GP_Component {
         
         do_action( 'gp_core_loaded' );
 
-        $gp->optional_components = apply_filters( 'gp_optional_components', array( 'sns', 'sms', 'pays', 'activities', 'votes' ) );
+        $gp->optional_components = apply_filters( 'gp_optional_components', array( 'sns', 'sms', 'pays', 'activities', 'votes', 'links' ) );
         $gp->required_components = apply_filters( 'gp_required_components', array( 'members' ) );
         
         if ( $active_components = gp_get_option( 'gp-active-components' ) ) {

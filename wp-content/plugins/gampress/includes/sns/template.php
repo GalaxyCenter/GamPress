@@ -74,6 +74,11 @@ function gp_sns_wechat_app_secret() {
         return gp_get_option( 'gp_sns_wechat_app_secret' );
     }
 
+
+function gp_sns_wechat_is_unauthorize_login() {
+    return (bool) gp_get_option( 'gp_sns_wechat_unauthorize_login' );
+}
+
 function gp_sns_wechat_sub_app_id() {
     echo gp_get_sns_wechat_sub_app_id();
 }

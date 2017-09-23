@@ -111,7 +111,7 @@ if ( !function_exists( 'get_request_values' ) ) {
         foreach( $names as $k => $v ) {
             $values[$k] = isset( $_REQUEST[$k] ) ? $_REQUEST[$k] : '';
 
-            if ( $v['required'] == true && empty( $values[$k] ) ) {
+            if ( $v['required'] == true && $values[$k] === '' ) {
                 $datas['error'] = $v['error'];
                 break;
             }
@@ -561,9 +561,25 @@ if ( !function_exists( 'nl2p' ) ) {
     }
 }
 
+if ( !function_exists( 'http_referer_domain_is' ) ) {
+    function http_referer_domain_is( $domain ) {
+        if ( !isset( $_SERVER['HTTP_REFERER'] ) )
+            return false;
+        return strpos( $_SERVER['HTTP_REFERER'], $domain ) === 0;
+    }
+}
+
 if ( !function_exists( 'is_weixin_browser' ) ) {
     function is_weixin_browser() {
         return strpos( $_SERVER['HTTP_USER_AGENT'], 'MicroMessenger' ) !== false;
+    }
+}
+
+if ( !function_exists( 'is_safari_browser' ) ) {
+    function is_apple_mobile_browser() {
+        return strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone')
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'iPod')
+            || strpos($_SERVER['HTTP_USER_AGENT'], 'iPad');
     }
 }
 
@@ -635,5 +651,52 @@ if ( !function_exists( 'friendly_time' ) ) {
                 return date("Y-m-d H:i:s", $sTime);
             }
         }
+    }
+}
+
+if ( !function_exists( 'get_remote_ip' ) ) {
+    function get_remote_ip() {
+
+        $REMOTE_ADDR = $_SERVER['REMOTE_ADDR'];
+
+        if (!empty($_SERVER['X_FORWARDED_FOR'])) {
+
+            $X_FORWARDED_FOR = explode(',', $_SERVER['X_FORWARDED_FOR']);
+
+            if (!empty($X_FORWARDED_FOR)) {
+                $REMOTE_ADDR = trim($X_FORWARDED_FOR[0]);
+            }
+
+        }
+
+        /*
+        * Some php environments will use the $_SERVER['HTTP_X_FORWARDED_FOR']
+        * variable to capture visitor address information.
+        */
+
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+
+            $HTTP_X_FORWARDED_FOR= explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+
+            if (!empty($HTTP_X_FORWARDED_FOR)) {
+                $REMOTE_ADDR = trim($HTTP_X_FORWARDED_FOR[0]);
+            }
+
+        }
+
+        return preg_replace('/[^0-9a-f:\., ]/si', '', $REMOTE_ADDR);
+
+    }
+}
+
+if ( !function_exists( 'query_get_value' ) ) {
+    function query_get_value( $url, $key ) {
+        $pattern='/[?|&]' . $key . '=' . '([^&;]+?)(&|#|;|$)/';
+        $matches = array();
+        if ( preg_match( $pattern, $url, $matches ) ) {
+            return $matches[1];
+        }
+
+        return '';
     }
 }

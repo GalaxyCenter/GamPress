@@ -51,7 +51,7 @@ function gp_core_install_signups() {
                     KEY user_email (user_email)
 			) {$charset_collate};";
    
-    dbDelta( $sql );
+//    dbDelta( $sql );
 }
 
 function gp_core_install_sns() {

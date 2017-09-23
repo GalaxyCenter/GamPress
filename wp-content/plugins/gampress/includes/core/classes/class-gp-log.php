@@ -19,7 +19,7 @@ class GP_Log {
 
     public static function Init( $level = 15 ) {
         if(!self::$instance instanceof self) {
-            $handler = new GP_FileLog(  WP_CONTENT_DIR . '/' . date('Y-m-d') . '.log' );
+            $handler = new GP_FileLog(  GP_LOG_DIR . '/' . date('Y-m-d') . '.log' );
             self::$instance = new self();
             self::$instance->__setHandle($handler);
             self::$instance->__setLevel($level);
@@ -88,5 +88,14 @@ class GP_Log {
 
     public static function INFO($msg) {
         self::$instance->write(2, $msg);
+    }
+
+    public static function TRACE() {
+        self::$instance->write( 2, sprintf('trace,%1$s,%2$s,%3$s,%4$s,%5$s',
+            gp_loggedin_user_id(),
+            gp_get_loggedin_user_displayname(),
+            gp_format_time( time() ),
+            urldecode( $_SERVER['REQUEST_URI'] ),
+            get_remote_ip() ) );
     }
 }

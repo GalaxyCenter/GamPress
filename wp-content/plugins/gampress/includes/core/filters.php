@@ -124,3 +124,25 @@ function gp_email_set_default_tokens( $tokens, $property_name, $transform, $emai
     return $tokens;
 }
 add_filter( 'gp_email_get_tokens', 'gp_email_set_default_tokens', 6, 4 );
+
+function gp_filter_metaid_column_name( $q ) {
+    /*
+     * Replace quoted content with __QUOTE__ to avoid false positives.
+     * This regular expression will match nested quotes.
+     */
+    $quoted_regex = "/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/s";
+    preg_match_all( $quoted_regex, $q, $quoted_matches );
+    $q = preg_replace( $quoted_regex, '__QUOTE__', $q );
+
+    $q = str_replace( 'meta_id', 'id', $q );
+
+    // Put quoted content back into the string.
+    if ( ! empty( $quoted_matches[0] ) ) {
+        for ( $i = 0; $i < count( $quoted_matches[0] ); $i++ ) {
+            $quote_pos = strpos( $q, '__QUOTE__' );
+            $q = substr_replace( $q, $quoted_matches[0][ $i ], $quote_pos, 9 );
+        }
+    }
+
+    return $q;
+}

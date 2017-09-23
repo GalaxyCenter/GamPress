@@ -32,8 +32,14 @@ function pays_create() {
         return false;
     }
     $pay = apply_filters( "gp_pays_{$name}", false );
-    $pay->do_pay( $order_id, $product_name, $product_fee, $form_values['values']['redirect'] );
+    $args = apply_filters( "gp_pays_{$name}_args", array(
+                                'order_id'      => $order_id,
+                                'product_name'  => $product_name,
+                                'product_fee'   => $product_fee,
+                                'redirect'      => $form_values['values']['redirect']
+                            ) );
 
+    $pay->do_pay( $args );
 }
 add_action( 'gp_actions', 'pays_create' );
 
@@ -64,6 +70,10 @@ function pays_return() {
     } else {
         $redirect = '';
     }
+    // 在centos 6.9， apache + php 上会带上这个url
+    if ( isset( $_GET['url'] ) ) {
+        unset($_GET['url']);
+    }
 
     $result = pays_virify( $_GET );
     if ( $result )
@@ -76,5 +86,6 @@ add_action( 'gp_actions', 'pays_return' );
 function pays_virify( $params ) {
     $name = gp_action_variable(0);
     $pay = apply_filters( "gp_pays_{$name}", false );
+    GP_Log::INFO($name.'@verify:' . json_encode($params));
     return $pay->verify( $params );
 }

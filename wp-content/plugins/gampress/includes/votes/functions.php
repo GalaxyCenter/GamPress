@@ -33,6 +33,9 @@ function gp_votes_add_vote( $args = '' ) {
 }
 
 function gp_votes_user_liked( $user_id, $item_id ) {
+    if ( empty( $user_id ) )
+        return false;
+
     $count = GP_Votes_Vote::user_vote_count( $user_id, $item_id );
     return $count != 0;
 }

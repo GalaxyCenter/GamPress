@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: GamPress
- * Plugin URI: http://weibo.com/texel
+ * Plugin URI: https://github.com/kuibobo/GamPress
  * Description: Gam插件测试版
  * Version: 1.0.0
  * Author: Bourne Jiang
@@ -91,13 +91,6 @@ if ( !class_exists( 'GamPress' ) ) :
             
             if ( !defined( 'GP_DATE_BASE' ) )
                 define( 'GP_DATE_BASE', date("Y-m-d", 0) );
-
-            define( 'NOW_TIME',        $_SERVER['REQUEST_TIME']);
-            define( 'REQUEST_METHOD',  $_SERVER['REQUEST_METHOD']);
-            define( 'IS_GET',          REQUEST_METHOD =='GET' ? true : false);
-            define( 'IS_POST',         REQUEST_METHOD =='POST' ? true : false);
-            define( 'IS_PUT',          REQUEST_METHOD =='PUT' ? true : false);
-            define( 'IS_DELETE',       REQUEST_METHOD =='DELETE' ? true : false);
         }
         
         /**
@@ -220,6 +213,7 @@ if ( !class_exists( 'GamPress' ) ) :
             if ( ! $this->do_autoload ) {
                 require( $this->includes_dir . 'core/classes.php' );
             }
+            GP_Log::Init();
         }
         
         /**
@@ -298,7 +292,8 @@ if ( !class_exists( 'GamPress' ) ) :
                                                 'sms',
                                                 'pays',
                                                 'activities',
-                                                'votes'
+                                                'votes',
+                                                'links'
                                                 ));
                     
             $irregular_map = array(

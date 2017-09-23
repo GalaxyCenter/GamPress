@@ -15,3 +15,8 @@ function gp_pays_wechat( $name ) {
     return new GP_Pays_Wechat();
 }
 add_filter( 'gp_pays_wechat', 'gp_pays_wechat' );
+
+function gp_pays_wechat_pack( $name ) {
+    return new GP_Pays_Wechat_Pack();
+}
+add_filter( 'gp_pays_wechat_pack', 'gp_pays_wechat_pack' );

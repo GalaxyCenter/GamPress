@@ -20,4 +20,5 @@ class GP_Sns_User {
     var $user_id;
     var $user_name;
     var $avatar;
+    var $from;
 }

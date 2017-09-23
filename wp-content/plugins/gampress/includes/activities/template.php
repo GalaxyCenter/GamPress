@@ -35,5 +35,5 @@ function gp_activities_activity_post_time( $activity ) {
 }
 
     function gp_get_activities_activity_post_time( $activity ) {
-        return date('Y-m-d', $activity->post_time);
+        return gp_format_time( $activity->post_time );
     }

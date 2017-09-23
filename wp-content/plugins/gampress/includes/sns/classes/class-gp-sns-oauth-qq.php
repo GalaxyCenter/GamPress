@@ -18,11 +18,11 @@ class GP_Sns_OAuth_QQ extends GP_Sns_Api {
         $this->app_secre         = gp_get_sns_qq_app_secret();
     }
 
-    public function request_authorize_code( $callback = '' ) {
+    public function request_authorize_code( $callback = '', $scope = 'get_user_info' ) {
         $this->redirect_url   = urlencode( gp_get_root_domain() . '/' . gp_get_sns_slug() . '/oauth_callback/qq?callback=' . $callback );
         $state                = $_SESSION ['state'] = md5 ( uniqid ( rand (), true ) );
 
-        $url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id={$this->app_id}&redirect_uri={$this->redirect_url}&scope=get_user_info&state={$state}";
+        $url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id={$this->app_id}&redirect_uri={$this->redirect_url}&scope={$scope}&state={$state}";
 
         gp_core_redirect( $url );
     }

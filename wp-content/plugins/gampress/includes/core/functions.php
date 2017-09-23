@@ -121,7 +121,8 @@ function gp_core_get_directory_page_default_titles() {
             'pays'          => _x( 'Pays',        'Page title for the Pays screen.', 'gampress' ),
             'activate'      => _x( 'Activate',    'Page title for the user activation screen.',   'gampress' ),
             'signup'        => _x( 'Signup',      'Page title for the user Signup screen.', 'gampress' ),
-            'activities'    => _x( 'Activities',  'Page title for the Activities screen.', 'gampress' )
+            'activities'    => _x( 'Activities',  'Page title for the Activities screen.', 'gampress' ),
+            'links'         => _x( 'Links',       'Page title for the Link screen.', 'gampress' ),
             );
             
     return apply_filters( 'gp_core_get_directory_page_default_titles', $page_default_titles );
@@ -290,8 +291,7 @@ function gp_core_add_page_mappings( $components, $existing = 'keep' ) {
         restore_current_blog();
 }
 
-function gp_core_current_time( $gmt = true ) {
-    // Get current time in MYSQL format
+function gp_core_current_time( $gmt = false ) {
     $current_time = current_time( 'mysql', $gmt );
     
     return $current_time;
@@ -473,7 +473,11 @@ function gp_core_get_components( $type = 'all' ) {
         'votes' => array(
             'title'       => __( 'Votes', 'gampress' ),
             'description' => __( 'Votes', 'gampress' )
-        )
+        ),
+        'links' => array(
+            'title'       => __( 'Links', 'gampress' ),
+            'description' => __( 'Links', 'gampress' )
+        ),
 	);
 
 	// Add blogs tracking if multisite.
@@ -932,4 +936,29 @@ function gp_get_metadata($meta_type, $object_id, $meta_key = '', $default_value 
         return $default_value;
     else
         return (array) $default_value;
+}
+
+function gp_parse_args( $args, $defaults = array(), $filter_key = '' ) {
+    if ( is_object( $args ) ) {
+        $r = get_object_vars( $args );
+    } elseif ( is_array( $args ) ) {
+        $r =& $args;
+    } else {
+        wp_parse_str( $args, $r );
+    }
+
+    if ( !empty( $filter_key ) ) {
+        $r = apply_filters( 'gp_before_' . $filter_key . '_parse_args', $r );
+    }
+
+    // Parse.
+    if ( is_array( $defaults ) && !empty( $defaults ) ) {
+        $r = array_merge( $defaults, $r );
+    }
+
+    if ( !empty( $filter_key ) ) {
+        $r = apply_filters( 'gp_after_' . $filter_key . '_parse_args', $r );
+    }
+
+    return $r;
 }

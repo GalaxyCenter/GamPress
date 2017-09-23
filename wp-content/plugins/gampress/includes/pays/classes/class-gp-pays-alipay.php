@@ -26,7 +26,7 @@ class GP_Pays_Alipay extends GP_Pays {
         $this->alipay_key           = gp_get_pays_alipay_key();
     }
 
-    public function do_pay( $order_id, $product_name, $product_fee, $redirect = '' ) {
+    public function do_pay( $args ) {
 
         $params = array(
             "service"           => 'alipay.wap.create.direct.pay.by.user',
@@ -34,11 +34,11 @@ class GP_Pays_Alipay extends GP_Pays {
             "seller_id"         => $this->alipay_partner,
             "payment_type"	    => 1,
             "notify_url"	    => gp_get_pays_alipay_notify_url(),
-            "return_url"	    => gp_get_pays_alipay_return_url() . '?redirect=' . urlencode( $redirect ),
+            "return_url"	    => gp_get_pays_alipay_return_url() . '?redirect=' . urlencode( $args['redirect'] ),
             "_input_charset"	=> 'utf-8',
-            "out_trade_no"	    => $order_id,
-            "subject"	        => $product_name,
-            "total_fee"	        => $product_fee,
+            "out_trade_no"	    => $args['order_id'],
+            "subject"	        => $args['product_name'],
+            "total_fee"	        => $args['product_fee'],
             "app_pay"	        => 'Y'
         );
 
@@ -93,7 +93,6 @@ class GP_Pays_Alipay extends GP_Pays {
             return false;
 
         //return array( 'order_id' => $params['out_trade_no'], 'total_fee' => $params['total_fee'], 'notify_time' => $params['notify_time'] );
-
         do_action( 'gp_pays_success', $params['out_trade_no'], $params['total_fee'], $params['notify_time'] );
         return true;
     }

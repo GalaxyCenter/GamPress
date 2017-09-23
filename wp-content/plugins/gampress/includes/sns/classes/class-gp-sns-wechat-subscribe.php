@@ -25,6 +25,7 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
     public function __construct() {
         $this->app_id            = gp_get_sns_wechat_sub_app_id();
         $this->app_secre         = gp_get_sns_wechat_sub_app_secret();
+        $this->token             = gp_get_sns_wechat_sub_app_token();
     }
 
     public function request_access_token() {
@@ -60,7 +61,8 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
     }
     
     private function check_signature() {
-        $token = $this->token;$signature = $_GET["signature"];
+        $token = $this->token;
+        $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
 
@@ -73,15 +75,19 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
     }
     
     public function process() {
+        if ( ! isset( $HTTP_RAW_POST_DATA ) ) {
+            $GLOBALS["HTTP_RAW_POST_DATA"] = file_get_contents( 'php://input' );
+        }
         $postStr = isset( $GLOBALS["HTTP_RAW_POST_DATA"] ) ? $GLOBALS["HTTP_RAW_POST_DATA"] : '';
         
         if ( !empty( $postStr ) ) {
-            $this->logger( "R ".$postStr );
-            
             $postObj = simplexml_load_string( $postStr, 'SimpleXMLElement', LIBXML_NOCDATA );
             $RX_TYPE = trim( $postObj->MsgType );
             
             switch ($RX_TYPE) {
+                case 'text':
+                    $result = $this->process_text( $postObj );
+                    break;
                 case "event":
                     $result = $this->process_event( $postObj );
                     break;
@@ -89,11 +95,15 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
                     $result = $this->transmit_text( $postObj, _x( 'Default Message', 'gampress' ) );
                     break;
             }
-            $this->logger( "T ". $result );
             return $result;
         } else {
             return "";
         }
+    }
+
+    private function process_text( $object ) {
+        $content = apply_filters( 'gp_wehchats_precess_text', $object->Content, $object );
+        return $content;
     }
     
     private function process_event( $object ) {
@@ -128,8 +138,5 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
 
         $result = sprintf( $xmlTpl, $object->FromUserName, $object->ToUserName, time(), count( $newsArray ) );
         return $result;
-    }
-    
-    private function logger( $log_content ) {
     }
 }

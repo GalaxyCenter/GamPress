@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 
 class GP_Pays {
 
-    public function do_pay( $order_id, $product_name, $product_fee, $redirect = '' ) {}
+    public function do_pay( $args ) {}
 
     public function notify() {}
 

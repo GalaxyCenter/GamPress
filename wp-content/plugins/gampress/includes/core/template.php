@@ -51,6 +51,13 @@ function gp_current_action() {
     return $current_action;
 }
 
+function gp_action_variable_is( $position, $value ) {
+    $action_variables = gp_action_variables();
+    $action_variable  = isset( $action_variables[ $position ] ) ? $action_variables[ $position ] : $defalt;
+
+    return $action_variable === $value;
+}
+
 function gp_current_item() {
     $gp = gampress();
     
@@ -61,7 +68,6 @@ function gp_current_item() {
 function gp_action_variable( $position = 0, $defalt = false ) {
     $action_variables = gp_action_variables();
     $action_variable  = isset( $action_variables[ $position ] ) ? $action_variables[ $position ] : $defalt;
-    
     return $action_variable; 
 }
 
@@ -373,7 +379,7 @@ function gp_get_title_parts( $seplocation = 'right' ) {
         $gp_title_parts = array_reverse( $gp_title_parts );
     }
     
-    return (array) apply_filters( 'gp_get_title_parts', $gp_title_parts );
+    return (array) apply_filters( 'gp_get_title_parts', $gp_title_parts, $seplocation );
 }
 
 function gp_is_component_front_page( $component = '' ) {
@@ -460,3 +466,50 @@ function gp_description() {
 
         return $desc;
     }
+
+function gp_format_time( $time = '', $exclude_time = false, $gmt = true ) {
+
+    // Bail if time is empty or not numeric
+    // @todo We should output something smarter here.
+    if ( empty( $time ) || ! is_numeric( $time ) ) {
+        return false;
+    }
+
+    // Get GMT offset from root blog.
+    if ( true === $gmt ) {
+
+        // Use Timezone string if set.
+        $timezone_string = gp_get_option( 'timezone_string' );
+        if ( ! empty( $timezone_string ) ) {
+            $timezone_object = timezone_open( $timezone_string );
+            $datetime_object = date_create( "@{$time}" );
+            $timezone_offset = timezone_offset_get( $timezone_object, $datetime_object ) / HOUR_IN_SECONDS;
+
+            // Fall back on less reliable gmt_offset.
+        } else {
+            $timezone_offset = gp_get_option( 'gmt_offset' );
+        }
+
+        // Calculate time based on the offset.
+        $calculated_time = $time + ( $timezone_offset * HOUR_IN_SECONDS );
+
+        // No localizing, so just use the time that was submitted.
+    } else {
+        $calculated_time = $time;
+    }
+
+    // Formatted date: "March 18, 2014".
+    $formatted_date = date_i18n( gp_get_option( 'date_format' ), $calculated_time, $gmt );
+
+    // Should we show the time also?
+    if ( true !== $exclude_time ) {
+
+        // Formatted time: "2:00 pm".
+        $formatted_time = date_i18n( gp_get_option( 'time_format' ), $calculated_time, $gmt );
+
+        // Return string formatted with date and time.
+        $formatted_date = sprintf( esc_html__( '%1$s %2$s', 'gampress' ), $formatted_date, $formatted_time );
+    }
+
+    return apply_filters( 'gp_format_time', $formatted_date );
+}

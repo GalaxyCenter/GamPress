@@ -3,6 +3,8 @@
 
 集成SNS登录组件(微信,微薄,QQ,短信), 
 
+继承微信订阅号功能.
+
 Pay组件(支付宝,微信支付), 
 
 Activity留言模块, 
@@ -50,6 +52,48 @@ gp_wechat_share( $link, $title, $desc, $icon );
 ?>
 
 ```
+4)接入微信公号菜单和回复
+```PHP
+
+function gp_books_sns_sub_proc_event( $content, $object ) {
+    switch ($object->Event) {
+        case "subscribe":
+            if ( $object->ToUserName == 'gh_035fc7f53229' ) { // 订阅号A
+                $content = "关注并置顶『xxx』";
+            } else { // 订阅号B
+                $content = "关注并置顶『BBB』";
+            }
+            $content = GP_Sns_Wechat_Subscribe::transmit_text( $object, $content );
+            break;
+        case "unsubscribe":
+            $content = "很遗憾你取消关注";
+            $content = GP_Sns_Wechat_Subscribe::transmit_text( $object, $content );
+            break;
+        case "CLICK":
+            switch ($object->EventKey) {
+                case 'MENU_AAA':
+                    $content = '您点击了菜单 MENU_AAA';
+                    $content = GP_Sns_Wechat_Subscribe::transmit_text( $object, $content );
+                    break;
+
+                default:
+                    $content = "感谢您的支持";
+                    $content = GP_Sns_Wechat_Subscribe::transmit_text( $object, $content );
+                    break;
+            }
+
+            break;
+    }
+
+    return $content;
+}
+add_filter( 'gp_wehchats_precess_event', 'gp_books_sns_sub_proc_event', 10, 2 );
+
+function gp_books_sns_sub_proc_text( $content, $object ) {
+    $content = "您给我发了这个内容:" $content;
+    return $content;
+}
+add_filter( 'gp_wehchats_precess_text', 'gp_books_sns_sub_proc_text', 10, 2 );
 
 ## 感谢
 感谢BuddyPress. 插件的实现机制跟BuddyPress一样,并且部分代码来至BuddyPress

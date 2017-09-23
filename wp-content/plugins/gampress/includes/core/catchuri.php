@@ -13,7 +13,7 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 function gp_core_set_uri_globals() {
-    global $current_blog, $wp_rewrite;
+    global $wp_rewrite;
     
     $gp = gampress();
     

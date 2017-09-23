@@ -85,12 +85,32 @@ function gp_core_admin_sns_settings() {
                     </td>
                 </tr>
 
+                <tr valign="top">
+                    <th scope="row"><?php _e('Wechat UnAuthorize Login WordPress','gampress')?></th>
+
+                    <td>
+                        <input type="checkbox" id="<?php echo esc_attr( "gp_sns_wechat_unauthorize_login" ); ?>" <?php checked( gp_sns_wechat_is_unauthorize_login(), true );?>/>
+                        <input type="hidden" name="<?php echo esc_attr( "gp_sns_wechat_unauthorize_login" ); ?>" value="<?php echo gp_sns_wechat_is_unauthorize_login() ? 1 : 0 ;?>"/>
+                        <p class="description"><?php _e('This is the AppSecret of your Wechat Oauth application', 'gampress')?></p>
+                    </td>
+                    <script>
+                        $ = jQuery;
+                        $('#gp_sns_wechat_unauthorize_login').click(function () {
+                            if ($(this).is(':checked')) {
+                                $('input[name="gp_sns_wechat_unauthorize_login"]').val(1);
+                            } else {
+                                $('input[name="gp_sns_wechat_unauthorize_login"]').val(0);
+                            }
+                        });
+                    </script>
+                </tr>
+
                 <tr>
                     <th scope="row"><?php _e('URL','gampress')?></th>
 
                     <td>
                         <h4><?php gp_sns_wechat_redirect_uri();?></h4>
-                        <p class="description"><?php _e('This is the url of your Sns subscribe application', 'gampress')?></p>
+                        <p class="description"><?php _e('This is the url of your wechat application', 'gampress')?></p>
                     </td>
                 </tr>
                 </tbody>
@@ -188,6 +208,7 @@ function gp_core_admin_sns_settings_handler() {
     $form_items = array(
             'gp_sns_wechat_app_id',
             'gp_sns_wechat_app_secret',
+			'gp_sns_wechat_unauthorize_login',
 
 			'gp_sns_wechat_sub_app_id',
 			'gp_sns_wechat_sub_app_secret',
