@@ -94,6 +94,7 @@ function gp_books_sns_sub_proc_text( $content, $object ) {
     return $content;
 }
 add_filter( 'gp_wehchats_precess_text', 'gp_books_sns_sub_proc_text', 10, 2 );
+```
 
 ## 感谢
 感谢BuddyPress. 插件的实现机制跟BuddyPress一样,并且部分代码来至BuddyPress
