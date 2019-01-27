@@ -10,10 +10,10 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! gampress()->do_autoload ) {
-    require dirname( __FILE__ ) . '/classes/class-gp-sms-component.php';
+    require dirname( __FILE__ ) . '/classes/class-gp-messages-message.php';
 }
 
 function gp_setup_messages() {
-    gampress()->messages = new GP_Sms_Component();
+    gampress()->messages = new GP_Messages_Component();
 }
 add_action( 'gp_setup_components', 'gp_setup_messages', 6 );

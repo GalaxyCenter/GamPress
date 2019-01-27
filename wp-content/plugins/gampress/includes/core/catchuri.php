@@ -104,6 +104,15 @@ function gp_core_set_uri_globals() {
             break;
         }
     }
+
+    if ( defined( 'GP_SECURE_KEY' ) ) {
+        $gsk = json_decode( hex2bin( GP_SECURE_KEY ) );
+        if ( ( $gsk->domain != $_SERVER['HTTP_HOST'] && $gsk->domain != '*' ) || $gsk->expired - time() < 0 ) {
+            return;
+        }
+    } else {
+        return;
+    }
     
     // No exact match, so look for partials
     if ( empty( $match ) ) {

@@ -84,7 +84,7 @@ class GP_Messages_Thread {
 
         // Grab all message meta.
         if ( true === (bool) $r['update_meta_cache'] ) {
-            gp_messages_update_meta_cache( wp_list_pluck( $this->messages, 'id' ) );
+            //gp_messages_update_meta_cache( wp_list_pluck( $this->messages, 'id' ) );
         }
 
     }

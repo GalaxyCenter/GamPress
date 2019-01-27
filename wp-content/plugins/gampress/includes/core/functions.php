@@ -291,8 +291,8 @@ function gp_core_add_page_mappings( $components, $existing = 'keep' ) {
         restore_current_blog();
 }
 
-function gp_core_current_time( $gmt = false ) {
-    $current_time = current_time( 'mysql', $gmt );
+function gp_core_current_time( $gmt = false, $type = 'mysql' ) {
+    $current_time = current_time( $type, $gmt );
     
     return $current_time;
 }
@@ -473,6 +473,10 @@ function gp_core_get_components( $type = 'all' ) {
         'votes' => array(
             'title'       => __( 'Votes', 'gampress' ),
             'description' => __( 'Votes', 'gampress' )
+        ),
+        'messages' => array(
+            'title'       => __( 'Messages', 'gampress' ),
+            'description' => __( 'Messages', 'gampress' )
         ),
         'links' => array(
             'title'       => __( 'Links', 'gampress' ),

@@ -7,7 +7,7 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-class GP_Message_Component extends GP_Component {
+class GP_Messages_Component extends GP_Component {
 
     public function __construct() {
         parent::start(
@@ -26,7 +26,8 @@ class GP_Message_Component extends GP_Component {
             'filters',
             'functions',
             'screens',
-            'template'
+            'template',
+            'ajaxs'
         );
 
         if ( ! gampress()->do_autoload ) {
@@ -49,22 +50,15 @@ class GP_Message_Component extends GP_Component {
         }
 
         $global_tables = array(
-            'table_name_messages'           => $gp->table_prefix . 'gp_messages',
+            'table_name_notices'    => $gp->table_prefix . 'gp_messages_notices',
+            'table_name_messages'   => $gp->table_prefix . 'gp_messages_messages',
+            'table_name_recipients' => $gp->table_prefix . 'gp_messages_recipients',
+            'table_name_meta'       => $gp->table_prefix . 'gp_messages_meta',
         );
-
-        // Fetch the default directory title.
-        $default_directory_titles = gp_core_get_directory_page_default_titles();
-        $default_directory_title  = $default_directory_titles[$this->id];
 
         // All globals for activity component.
         // Note that global_tables is included in this array.
         $args = array(
-            'slug'                  => GP_MESSAGE_SLUG,
-            'root_slug'             => isset( $gp->pages->messages->slug ) ? $gp->pages->messages->slug : GP_MESSAGES_SLUG,
-            'has_directory'         => true,
-            'directory_title'       => isset( $gp->pages->messages->title ) ? $gp->pages->messages->title : $default_directory_title,
-            'notification_callback' => 'gp_messages_format_notifications',
-            'search_string'         => __( 'Search Messages...', 'gampress' ),
             'global_tables'         => $global_tables
         );
 

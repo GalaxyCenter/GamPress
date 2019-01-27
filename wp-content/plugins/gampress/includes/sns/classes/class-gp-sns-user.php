@@ -19,6 +19,9 @@ class GP_Sns_User {
     var $ID;
     var $user_id;
     var $user_name;
+    var $unionid;
     var $avatar;
     var $from;
+    var $subscribe;
+    var $gender;
 }

@@ -158,3 +158,11 @@ function gp_messages_new_message( $args = '' ) {
 
     return $message->thread_id;
 }
+
+function gp_messages_mark_thread_read( $thread_id ) {
+    return GP_Messages_Thread::mark_as_read( $thread_id );
+}
+
+function gp_get_total_unread_messages_count() {
+    return GP_Messages_Thread::get_inbox_count();
+}

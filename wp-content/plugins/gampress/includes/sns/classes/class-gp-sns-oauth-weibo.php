@@ -15,7 +15,7 @@ class GP_Sns_OAuth_Weibo extends GP_Sns_Api {
         $this->app_secre         = gp_get_sns_weibo_app_secret();
     }
 
-    public function request_authorize_code( $callback = '', $scope = '' ) {
+    public function request_authorize_code( $callback = '', $forwardCode = 'false', $scope = '') {
         $this->redirect_url   = urlencode( gp_get_root_domain() . '/' . gp_get_sns_slug() . '/oauth_callback/weibo' );
         $url = "https://api.weibo.com/oauth2/authorize?client_id={$this->app_id}&redirect_uri={$this->redirect_url}&response_type=code";
 

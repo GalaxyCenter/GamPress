@@ -28,30 +28,6 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
         $this->token             = gp_get_sns_wechat_sub_app_token();
     }
 
-    public function request_access_token() {
-        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$this->app_id}&secret={$this->app_secre}";
-        $json = json_decode( file_get_contents( $url ), true );
-
-        $this->access_token = $json['access_token'];
-        if ( empty( $this->access_token ) ) {
-            $errmsg = $json['errmsg'];
-            throw new Exception( $errmsg );
-        }
-    }
-
-    public function get_user_info() {
-        $info_url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' . $this->access_token . '&openid=' . $this->openid;
-
-        $user_info = json_decode( file_get_contents( $info_url ), true );
-        if( empty( $user_info ) )
-            throw new Exception( '授权时发生错误' );
-        $sns_user = new GP_Sns_User();
-        $sns_user->avatar = $user_info['headimgurl'];
-        $sns_user->ID = $user_info['openid'];
-        $sns_user->user_name = $user_info['nickname'];
-        return $sns_user;
-    }
-
     public function check() {
         $echoStr = $_GET["echostr"];
         
@@ -92,7 +68,7 @@ class GP_Sns_Wechat_Subscribe extends GP_Sns_Api {
                     $result = $this->process_event( $postObj );
                     break;
                 default:
-                    $result = $this->transmit_text( $postObj, _x( 'Default Message', 'gampress' ) );
+                    $result = $this->transmit_text( $postObj, apply_filters( 'gp_wehchats_default_message', _x( 'Default Message', 'gampress' ) ) );
                     break;
             }
             return $result;

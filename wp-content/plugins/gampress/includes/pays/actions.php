@@ -12,6 +12,9 @@ function pays_create() {
     if ( !gp_is_pays_component() || ! gp_is_current_action( 'create' ) )
         return false;
 
+    if ( !is_user_logged_in() )
+        throw new Exception( __( 'You are not logged in.', 'gampress' ) );
+
     $form_names = array(
         'order_id'                  => array( 'required' => true, '' => ''),
         'product_fee'               => array( 'required' => true, 'error' => __( 'The product_fee can\'t be empty', 'gampress-ext' ) ),
@@ -56,6 +59,7 @@ function pays_notify() {
     $name = gp_action_variable(0);
     $pay = apply_filters( "gp_pays_{$name}", false );
     $pay->notify();
+    die();
 }
 add_action( 'gp_actions', 'pays_notify' );
 
@@ -77,7 +81,7 @@ function pays_return() {
 
     $result = pays_virify( $_GET );
     if ( $result )
-        gp_core_redirect( '/pays/success?redirect=' . $redirect );
+        gp_core_redirect( '/pays/success?redirect=' . $redirect . '&order_id=' . $_GET['out_trade_no'] );
     else
         gp_core_redirect( '/pays/fail?redirect=' . $redirect );
 }

@@ -86,6 +86,15 @@ function gp_core_admin_sns_settings() {
                 </tr>
 
                 <tr valign="top">
+                    <th scope="row"><?php _e('Wechat Oauth AccessToken','gampress')?></th>
+
+                    <td>
+                        <input type="text" value="<?php echo wp_cache_get( 'gp_wechat_access_token', 'gp' );?>"/>
+                        <p class="description"></p>
+                    </td>
+                </tr>
+
+                <tr valign="top">
                     <th scope="row"><?php _e('Wechat UnAuthorize Login WordPress','gampress')?></th>
 
                     <td>

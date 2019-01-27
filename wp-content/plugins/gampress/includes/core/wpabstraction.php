@@ -122,6 +122,16 @@ if ( !function_exists( 'get_request_values' ) ) {
     }
 }
 
+if ( !function_exists( 'get_words' ) ) {
+    function get_words($content) {
+        $content = str_replace( " ", '', $content );
+        $content = str_replace( "　", '', $content );
+        $content = str_replace( "\r\n", '', $content );
+
+        return mb_strlen( $content );
+    }
+}
+
 if ( !function_exists( 'get_object_attr' ) ) {
     function get_object_attr( $object, $attr, $values_map = false ) {
         if ( empty( $object) || empty( $attr ) )

@@ -147,15 +147,13 @@ function gp_sns_wechat_config( $link ) {
             $nonceStr .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
         }
 
-        $appid  = gp_get_sns_wechat_app_id();
-        $secret = gp_get_sns_wechat_app_secret();
+        $wechat = new GP_Sns_Wechat_Base();
 
         $cache_key = 'wechat_js_ticket';
         $ticket = wp_cache_get( $cache_key );
         if ( empty( $ticket ) ) {
-            $resp = http_request( "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}", 'GET' );
-            $res = json_decode( $resp );
-            $access_token = $res->access_token;
+            $wechat->request_access_token();
+            $access_token = $wechat->access_token;
 
             $resp = http_request( "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token={$access_token}", 'GET' );
             $res = json_decode( $resp );
@@ -170,7 +168,7 @@ function gp_sns_wechat_config( $link ) {
 
         $signPackage = array(
             "debug"     => false,
-            "appId"     => $appid,
+            "appId"     => $wechat->app_id,
             "nonceStr"  => $nonceStr,
             "timestamp" => $timestamp,
             "url"       => $link,

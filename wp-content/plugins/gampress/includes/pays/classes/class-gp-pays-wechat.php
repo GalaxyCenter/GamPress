@@ -74,7 +74,7 @@ class GP_Pays_Wechat extends GP_Pays {
                                 WeixinJSBridge.log(res.err_msg);
                                 //alert(res.err_code+res.err_desc+res.err_msg);
                                 if(res.err_msg.indexOf('ok')>0){
-                                    window.location.href='/pays/success?redirect=<?php echo $args['redirect'];?>';
+                                    window.location.href='/pays/success?redirect=<?php echo $args['redirect'];?>&order_id=<?php echo $args['order_id'];?>';
                                 }else{
                                     //alert(JSON.stringify(res));
                                     window.location.href='/pays/fail?redirect=<?php echo $args['redirect'];?>';
@@ -110,7 +110,8 @@ class GP_Pays_Wechat extends GP_Pays {
     public function notify() {
         // fix php7.0 下 $GLOBALS['HTTP_RAW_POST_DATA'] 为空的问题
         $GLOBALS['HTTP_RAW_POST_DATA'] = file_get_contents("php://input");
-
+        status_header(200);
+        GP_Log::INFO('GP_Pays_Wechat@notify:' . $GLOBALS['HTTP_RAW_POST_DATA']);
         $notify = new PayNotifyCallBack();
         $notify->Handle(true);
     }
@@ -137,19 +138,21 @@ class PayNotifyCallBack extends WxPayNotify {
 
     //重写回调处理函数
     public function NotifyProcess($data, &$msg) {
-        GP_Log::INFO("pay,wechat,NotifyProcess," . json_encode($data));
+        GP_Log::INFO("PayNotifyCallBack@NotifyProcess:" . json_encode($data));
         if(!array_key_exists("transaction_id", $data)) {
             $msg = "输入参数不正确";
+            GP_Log::ERROR("PayNotifyCallBack@NotifyProcess,输入参数不正确");
             return false;
         }
         //查询订单，判断订单真实性
         if(!$this->Queryorder($data["transaction_id"])) {
             $msg = "订单查询失败";
+            GP_Log::ERROR("PayNotifyCallBack@NotifyProcess:,订单查询失败");
             return false;
         }
-        GP_Log::INFO("pay,wechat,NotifyProcess,success" . $data['out_trade_no'] . $data['total_fee'] . $data['time_end']);
+        GP_Log::INFO("PayNotifyCallBack@NotifyProcess,success-" . $data['out_trade_no'] . '-'. $data['total_fee'] . '-'. $data['time_end']);
 
-        // 微信以分作为单位, 这里要将转换为分
+        // 微信以分作为单位, 这里要将转换
         $total_fee = $data['total_fee'] / 100;
         do_action( 'gp_pays_success', $data['out_trade_no'], $total_fee, $data['time_end'] );
         return true;

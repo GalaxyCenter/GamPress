@@ -467,7 +467,7 @@ function gp_description() {
         return $desc;
     }
 
-function gp_format_time( $time = '', $exclude_time = false, $gmt = true ) {
+function gp_format_time( $time = '', $exclude_time = false, $gmt = false ) {
 
     // Bail if time is empty or not numeric
     // @todo We should output something smarter here.

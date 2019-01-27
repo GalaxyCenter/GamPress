@@ -11,19 +11,15 @@ defined( 'ABSPATH' ) || exit;
 class GP_Messages_Message {
 
     public $id;
-
     public $thread_id;
-
     public $sender_id;
-
-    public $content;
-
-    public $post_time;
-
+    public $subject;
+    public $message;
+    public $date_sent;
     public $recipients = false;
 
     public function __construct( $id = null ) {
-        $this->post_time = gp_core_current_time();
+        $this->date_sent = gp_core_current_time();
         $this->sender_id = gp_loggedin_user_id();
 
         if ( ! empty( $id ) ) {
@@ -35,12 +31,12 @@ class GP_Messages_Message {
         global $wpdb;
 
         $gp    = gampress();
-        if ( $message = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$gp->messages->table_name} WHERE id = %d", $id ) ) ) {
+        if ( $message = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$gp->messages->table_name_messages} WHERE id = %d", $id ) ) ) {
             $this->id        = (int) $message->id;
             $this->thread_id = (int) $message->thread_id;
             $this->sender_id = (int) $message->sender_id;
             $this->content   = $message->content;
-            $this->post_time = $message->post_time;
+            $this->date_sent = $message->date_sent;
         }
     }
 

@@ -18,7 +18,7 @@ class GP_Sns_OAuth_QQ extends GP_Sns_Api {
         $this->app_secre         = gp_get_sns_qq_app_secret();
     }
 
-    public function request_authorize_code( $callback = '', $scope = 'get_user_info' ) {
+    public function request_authorize_code( $callback = '', $forwardCode = 'false' , $scope = 'get_user_info') {
         $this->redirect_url   = urlencode( gp_get_root_domain() . '/' . gp_get_sns_slug() . '/oauth_callback/qq?callback=' . $callback );
         $state                = $_SESSION ['state'] = md5 ( uniqid ( rand (), true ) );
 
@@ -45,6 +45,9 @@ class GP_Sns_OAuth_QQ extends GP_Sns_Api {
 
         $params = array();
         parse_str($resp, $params);
+        if ( !isset( $params["access_token"] ) ) {
+            throw new Exception( "授权错误" );
+        }
         $this->access_token = $params["access_token"];
     }
 
@@ -60,6 +63,9 @@ class GP_Sns_OAuth_QQ extends GP_Sns_Api {
         }
 
         $user = json_decode($resp);
+        if ( !property_exists($user, 'openid') ) {
+            throw new Exception( "QQ授权登录失败，请重新登录" );
+        }
         $this->openid = $user->openid;
         return $user->openid;
     }

@@ -9,6 +9,7 @@ require_once GP_PLUGIN_DIR . 'includes/pays/libs/wechat/lib/WxPay.Api.php';
  */
 class SendPack {
     var $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack';
+    //var $key = 'h1SSTp9He8YeRMrN5i7h65JxfsIbY2WG';
 
     //核心支付函数,参数：请求地址和参数
     function pay($obj, $key) {

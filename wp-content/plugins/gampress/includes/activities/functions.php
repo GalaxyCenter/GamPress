@@ -21,7 +21,7 @@ function gp_activities_get_activities( $args = '' ) {
         $datas = GP_Activities_Activity::get( $args );
 
         if ( !empty( $datas['items'] ) )
-            wp_cache_set( $key, $datas, $group );
+            wp_cache_set( $key, $datas, $group, 60 );
     }
     return $datas;
 }
@@ -49,18 +49,20 @@ function gp_activities_add( $args = '' ) {
 
     $defaults = array( 'id' => false ,
         'user_id'       => false,
+        'user_name'     => false,
         'component'     => false,
         'type'          => false,
         'content'       => false,
         'item_id'       => false,
         'parent_id'     => false,
+        'likes'         => false,
         'status'        => GP_ACTIVITY_APPROVED,
         'post_time'     => time() ) ;
 
     $r = wp_parse_args( $args, $defaults );
     extract( $r, EXTR_SKIP );
 
-    if ( empty( $user_id ) || empty( $component ) || empty( $type )
+    if ( empty( $component ) || empty( $type )
         || empty( $content ) || empty( $item_id ) )
         return false;
 
@@ -72,6 +74,7 @@ function gp_activities_add( $args = '' ) {
     }
 
     $activity->user_id      = $user_id;
+    $activity->user_name    = $user_name;
     $activity->component    = $component;
     $activity->content      = $content;
     $activity->item_id      = $item_id;
@@ -79,11 +82,14 @@ function gp_activities_add( $args = '' ) {
     $activity->post_time    = $post_time;
     $activity->status       = $status;
     $activity->type         = $type;
+    $activity->likes        = $likes;
 
     if ( !$activity->save() )
         return $activity;
 
     $group = 'gp_activities_' . $item_id;
+    wp_cache_clean( $group );
+    $group = 'gp_activities_';
     wp_cache_clean( $group );
     wp_cache_set( 'gp_activity_' . $activity->id, $activity );
 
@@ -120,4 +126,10 @@ function gp_activities_user_is_liked( $user_id, $activity_id ) {
 
 function gp_activities_activity_disapproved( $id ) {
     GP_Activities_Activity::update_status( $id, GP_ACTIVITY_DISAPPROVED );
+
+    $activity = gp_activities_get_activity( $id );
+    $group = 'gp_activities_' . $activity->item_id;
+    wp_cache_clean( $group );
+    $group = 'gp_activities_';
+    wp_cache_clean( $group );
 }

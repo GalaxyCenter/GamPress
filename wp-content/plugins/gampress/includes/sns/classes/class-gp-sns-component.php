@@ -132,6 +132,7 @@ class GP_Sns_Component extends GP_Component {
         $allowed_hosts[] = 'open.weixin.qq.com';
         $allowed_hosts[] = 'api.weibo.com';
         $allowed_hosts[] = 'graph.qq.com';
+        $allowed_hosts[] = 'test.adaixiong.com';
         return $allowed_hosts;
     }
 }

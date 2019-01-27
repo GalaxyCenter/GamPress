@@ -12,6 +12,7 @@ defined( 'ABSPATH' ) || exit;
 class GP_Activities_Activity {
     public $id;
     public $user_id;
+    public $user_name;
     public $component;
     public $type;
     public $content;
@@ -42,6 +43,7 @@ class GP_Activities_Activity {
 
         $this->id           = (int) $activity->id;
         $this->user_id      = (int) $activity->user_id;
+        $this->user_name    = $activity->user_name;
         $this->component    = $activity->component;
         $this->type         = $activity->type;
         $this->content      = $activity->content;
@@ -61,13 +63,15 @@ class GP_Activities_Activity {
                 "UPDATE {$gp->activities->table_name_activities} SET
                             user_id = %d, component = %s, `type` = %s,
                             content = %s, item_id = %d, parent_id = %d,
-                            post_time = %s, likes = %d, status = %d
+                            post_time = %s, likes = %d, status = %d,
+                            user_name = %s
                         WHERE
                             id = %d
                         ",
                 $this->user_id, $this->component, $this->type,
                 $this->content, $this->item_id, $this->parent_id,
                 $this->post_time, $this->likes, $this->status,
+                $this->user_name,
                 $this->id
             );
         } else {
@@ -75,13 +79,16 @@ class GP_Activities_Activity {
                 "INSERT INTO {$gp->activities->table_name_activities} (
                         user_id, component, `type`,
                         content, item_id, parent_id,
-                        post_time, likes, status
+                        post_time, likes, status,
+                        user_name
                     ) VALUES(%d, %s, %s,
                     %s, %d, %d,
-                    %s, %d, %d)",
+                    %s, %d, %d,
+                    %s)",
                 $this->user_id, $this->component, $this->type,
                 $this->content, $this->item_id, $this->parent_id,
-                $this->post_time, $this->likes, $this->status
+                $this->post_time, $this->likes, $this->status,
+                $this->user_name
             );
         }
 

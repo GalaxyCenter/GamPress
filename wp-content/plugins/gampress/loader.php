@@ -101,8 +101,8 @@ if ( !class_exists( 'GamPress' ) ) :
         private function setup_globals() {
             /** Versions **********************************************************/
             
-            $this->version    = '0.0.1';
-            $this->db_version = '001';
+            $this->version    = '0.0.13';
+            $this->db_version = '002';
             
             /** Components **/
             $this->current_component = '';
@@ -293,7 +293,8 @@ if ( !class_exists( 'GamPress' ) ) :
                                                 'pays',
                                                 'activities',
                                                 'votes',
-                                                'links'
+                                                'links',
+                                                'messages'
                                                 ));
                     
             $irregular_map = array(
