@@ -1,0 +1,158 @@
+[class^="icon-"],
+[class*=" icon-"] {
+    display: inline-block;
+    width: pxTorem(19px);
+    height: pxTorem(19px);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    overflow: hidden;
+}
+
+.icon-user{
+    width: pxTorem(22px);
+    height: pxTorem(22px);
+    background-image: url("../images/icon-user.png");
+}
+
+.icon-search{
+    @extend .icon-user;
+    background-image: url("../images/icon-search.png");
+}
+
+.icon-pre{
+    @extend .icon-user;
+    background-image: url("../images/icon-pre.png");
+}
+
+.icon-home{
+    @extend .icon-user;
+    background-image: url("../images/icon-home.png");
+}
+
+.icon-home_white{
+    @extend .icon-user;
+    background-image: url("../images/icon-home_white.png");
+}
+
+.icon-pre_white{
+    @extend .icon-user;
+    background-image: url("../images/icon-pre_white.png");
+}
+
+.icon-share{
+    @extend .icon-user;
+    background-image: url("../images/icon-share.png");
+}
+
+.icon-book{
+    @extend .icon-user;
+    background-image: url("../images/icon-book.png");
+}
+
+@for $i from 1 through 4{
+    .icon-nav-#{$i}{
+        background-image: url("../images/icon-nav-#{$i}.png");
+    }
+    .active .icon-nav-#{$i}{
+        background-image: url("../images/icon-nav-#{$i}_active.png");
+    }
+}
+
+.icon-qq{
+    width: pxTorem(15px);
+    height: pxTorem(17px);
+    background-image: url("../images/icon-qq.png");
+}
+
+.icon-pay-ali{
+    width: pxTorem(32px);
+    height: pxTorem(32px);
+    background-image: url("../images/icon-pay-ali.png");
+}
+
+.icon-pay-wx{
+    @extend .icon-pay-ali;
+    background-image: url("../images/icon-pay-wx.png");
+}
+
+.icon-pay-union{
+    @extend .icon-pay-ali;
+    background-image: url("../images/icon-pay-union.png");
+}
+
+.icon-send{
+    width: pxTorem(23px);
+    height: pxTorem(23px);
+    background-image: url("../images/icon-send.png");
+}
+
+.icon-close{
+    width: pxTorem(14px);
+    height: pxTorem(14px);
+    background-image: url("../images/icon-close.png");
+}
+
+.icon-success {
+    width: pxTorem(30px);
+    height: pxTorem(30px);
+    background-image: url("../images/icon-success.png");
+}
+
+.icon-error{
+    @extend .icon-success;
+    background-image: url("../images/icon-error.png");
+}
+
+@for $i from 1 through 7{
+    .icon-uc-#{$i}{
+        width: pxTorem(21px);
+        height: pxTorem(21px);
+        background-image: url("../images/icon-uc-#{$i}.png");
+    }
+}
+
+.icon-wx{
+    width: pxTorem(50px);
+    height: pxTorem(50px);
+    background-image: url("../images/icon-wx.png");
+}
+
+.icon-qzone{
+    @extend .icon-wx;
+    background-image: url("../images/icon-qzone.png");
+}
+
+.icon-wb{
+    @extend .icon-wx;
+    background-image: url("../images/icon-wb.png");
+}
+
+.icon-go-top{
+    width: pxTorem(16px);
+    height: pxTorem(16px);
+    background-image: url("../images/icon-go-top.png");
+}
+
+.icon-guide{
+    width: pxTorem(64px);
+    height: pxTorem(64px);
+    background-image: url("../images/icon-guide.png");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

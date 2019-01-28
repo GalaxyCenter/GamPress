@@ -1,0 +1,179 @@
+// variable
+$theme-color: #ffd23b !default;
+$border-color: #e1e1e1 !default;
+$dark-gray: #202020 !default;
+$gray: #666 !default;
+$light-gray: #959595 !default;
+$green: #72cd10 !default;
+$red: #ee4444 !default;
+$bg-color: #f5f5f5 !default;
+
+// type
+body {
+    line-height:1.4;
+    //font-family: Helvetica,arial,sans-serif;
+    font-family: "Lantinghei SC", "Open Sans", Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    font-size: pxTorem(14px);
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    color: $dark-gray;
+    background-color: #f2f2f2;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    color: $dark-gray;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+
+em, i{
+    font-style: normal;
+}
+
+img{
+    width: 100%;
+    vertical-align: middle;
+}
+
+input[type=text],
+input[type=password],
+input[type=tel],
+input[type=number],
+button,
+textarea{
+    padding: 0;
+    -webkit-appearance: none;
+}
+
+button{
+    border: 0;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    outline: none;
+}
+
+select{
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+textarea{
+    resize: none;
+}
+
+select{
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    font-weight: normal;
+}
+
+h1{
+    font-size: pxTorem(20px);
+}
+
+h2{
+    font-size: pxTorem(18px);
+}
+
+h3{
+    font-size: pxTorem(16px);
+}
+
+input,
+textarea{
+    outline: medium;
+}
+
+
+// shortcut
+@for $i from 1 through 5 {
+    $odd: pxTorem(5px) !default;
+    .mt#{$i}0 {
+        margin-top: $i * pxTorem(10px) !important;
+    }
+    .mt#{$i}5 {
+        margin-top: $i * pxTorem(10px) + $odd !important;
+    }
+    .mr#{$i}0 {
+        margin-right: $i * pxTorem(10px) !important;
+    }
+    .mr#{$i}5 {
+        margin-right: $i * pxTorem(10px) + $odd !important;
+    }
+    .mb#{$i}0 {
+        margin-bottom: $i * pxTorem(10px) !important;
+    }
+    .mb#{$i}5 {
+        margin-bottom: $i * pxTorem(10px) + $odd !important;
+    }
+    .ml#{$i}0 {
+        margin-left: $i * pxTorem(10px) !important;
+    }
+    .ml#{$i}5 {
+        margin-left: $i * pxTorem(10px) + $odd !important;
+    }
+}
+
+.l {
+    float: left;
+}
+
+.r {
+    float: right;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-right{
+    text-align: right !important;
+}
+
+.hide{
+    display: none;
+}
+
+.font-red{
+    color: $red !important;
+}
+
+.font-blue{
+    color: #52a6ff !important;
+}
+
+.font-white{
+    color: #fff !important;
+}
+
+.font-orange{
+    color: #ff9000 !important;
+}
+
+.font-green{
+    color: $green !important;
+}
+
+.font-gray{
+    color: $light-gray !important;
+}

@@ -1,0 +1,196 @@
+[class^="btn-"],
+[class*=" btn-"] {
+    display: inline-block;
+    border-radius: pxTorem(3px);
+    padding: pxTorem(7px) pxTorem(20px);
+    text-align: center;
+    color: #fff;
+    i{
+        margin-right: pxTorem(5px);
+    }
+    &:hover,
+    &:active{
+        color: #fff;
+    }
+}
+
+.btn-lg{
+    padding: pxTorem(8px) pxTorem(20px);
+    font-size: pxTorem(18px);
+}
+
+.btn-sm{
+    padding: pxTorem(6px) pxTorem(15px);
+    font-size: pxTorem(12px);
+}
+
+.btn-xs{
+    padding: pxTorem(3px) pxTorem(10px);
+    font-size: pxTorem(12px);
+}
+
+.btn-block{
+    padding: pxTorem(8px) 0;
+    width: 100%;
+    font-size: pxTorem(16px);
+}
+
+.btn-default{
+    border: $border-color solid 1px;
+    color: #91761b;
+    background-color: transparent;
+    &:hover,
+    &:active,
+    &.active{
+        color: #91761b;
+        //color: $dark-gray;
+        //background-color: #e5e5e5;
+        //background-color: darken(#b9b9b9, 5%);
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            background-color: #fff;
+        }
+    }
+}
+
+.btn-outline{
+    @extend .btn-default;
+    background-color: transparent !important;
+}
+
+.btn-primary{
+    border: #f2c722 solid 1px;
+    color: #91761b;
+    background-color: $theme-color;
+    &:hover,
+    &:active,
+    &.active{
+        color: #91761b;
+        background-color: darken($theme-color, 5%);
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            background-color: $theme-color;
+        }
+    }
+    &.btn-outline{
+        border-color: $theme-color;
+        color: $theme-color;
+    }
+}
+
+.btn-success{
+    border: #4cae4c solid 1px;
+    background-color: #5cb85c;
+    &:hover,
+    &:active,
+    &.active{
+        background-color: darken(#5cb85c, 5%);
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            background-color: #5cb85c;
+        }
+    }
+    &.btn-outline{
+        border-color: #5cb85c;
+        color: #5cb85c;
+    }
+}
+
+.btn-info{
+    border: #387bbd solid 1px;
+    background-color: #3c83ca;
+    &:hover,
+    &:active,
+    &.active{
+        background-color: darken(#3c83ca, 5%);
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            background-color: #3c83ca;
+        }
+    }
+    &.btn-outline{
+        border-color: #3c83ca;
+        color: #3c83ca;
+    }
+}
+
+.btn-warning{
+    border: #f48a00 solid 1px;
+    background-color: #ff9000;
+    &:hover,
+    &:active,
+    &.active{
+        background-color: darken(#ff9000, 5%);
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            background-color: #ff9000;
+        }
+    }
+    &.btn-outline{
+        border-color: #ff9000;
+        color: #ff9000;
+    }
+}
+
+.btn-danger{
+    border: #d93131 solid 1px;
+    background-color: #ee4444;
+    &:hover,
+    &:active,
+    &.active{
+        background-color: darken(#ee4444, 5%);
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            background-color: #ee4444;
+        }
+    }
+    &.btn-outline{
+        border-color: #ee4444;
+        color: #ee4444;
+    }
+}
+
+.btn-link{
+    color: $theme-color;
+    &:hover,
+    &:active,
+    &.active{
+        color: $theme-color;
+        text-decoration: underline;
+    }
+    &.btn-disable{
+        &:hover,
+        &:active{
+            text-decoration: none;
+        }
+    }
+    &.btn-outline{
+        border: 0;
+        color: #202020;
+    }
+}
+
+.btn-disable{
+    position: relative;
+    &:after{
+        position: absolute;
+        left: -1px;
+        right: -1px;
+        top: -1px;
+        bottom: -1px;
+        content: '';
+        background-color: rgba(#fff, .5);
+    }
+}

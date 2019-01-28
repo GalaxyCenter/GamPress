@@ -1,0 +1,108 @@
+.global-box{
+    margin: pxTorem(10px) 0;
+    border: $border-color solid;
+    border-width: 1px 0;
+    padding: 0 pxTorem(15px);
+    background-color: #fff;
+    &.no-line{
+        margin-top: 0;
+        margin-bottom: 0;
+        border-width: 0 0 1px 0;
+    }
+    &.mt-20{
+        margin-top: pxTorem(-20px);
+    }
+    > .hd{
+        @include clearfix;
+        padding-top: pxTorem(20px);
+        .r{
+            margin-top: pxTorem(3px);
+            color: $light-gray;
+        }
+        h1{
+            position: relative;
+            display: inline-block;
+            padding-left: pxTorem(10px);
+            font-size: pxTorem(17px);
+            &:before{
+                position: absolute;
+                left: 0;
+                top: 50%;
+                -webkit-transform: translate(0, -50%);
+                -moz-transform: translate(0, -50%);
+                -ms-transform: translate(0, -50%);
+                -o-transform: translate(0, -50%);
+                transform: translate(0, -50%);
+                border-radius: pxTorem(2px);
+                width: pxTorem(3px);
+                height: pxTorem(17px);
+                content: '';
+                background-color: $theme-color;
+            }
+            em{
+                margin-left: pxTorem(5px);
+                font-size: pxTorem(12px);
+                color: $light-gray;
+            }
+        }
+    }
+    > .bd{
+        .media{
+            > .item{
+                &:first-child{
+                    padding-top: 0;
+                    min-height: pxTorem(122px);
+                }
+            }
+        }
+    }
+    > .fd{
+        margin: pxTorem(20px) pxTorem(-15px) 0;
+        border-top: $border-color solid 1px;
+        .text-center{
+            display: block;
+            padding: pxTorem(15px);
+            font-size: pxTorem(12px);
+            color: $light-gray;
+        }
+        .fa{
+            font-size: pxTorem(14px);
+        }
+    }
+}
+
+.sub-box{
+    margin-bottom: pxTorem(10px);
+    border-bottom: $border-color solid 1px;
+    background-color: #fff;
+    > .hd{
+        border-bottom: $border-color solid 1px;
+        padding: 0 pxTorem(15px);
+        line-height: pxTorem(60px);
+        i{
+            vertical-align: pxTorem(-10px);
+            margin-right: pxTorem(10px);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

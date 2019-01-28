@@ -1,0 +1,212 @@
+.msg{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 2000;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: pxTorem(7px);
+    padding: pxTorem(15px);
+    text-align: center;
+    background-color: rgba(#000, .7);
+    h3{
+        margin-top: pxTorem(7px);
+        white-space: nowrap;
+        color: #fff;
+    }
+}
+
+.alert-message {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 3000;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: 7px;
+    padding: 15px;
+    max-width: 50%;
+    text-align: center;
+    background-color: rgba(#000, .7);
+
+    h3 {
+        margin-top: 8px;
+        color: #fff;
+    }
+
+    .icon-success {
+        width: 29px;
+        height: 29px;
+        background-image: url("../images/alert-message-icon-success.png");
+    }
+    .icon-error {
+        @extend .icon-success;
+        background-image: url("../images/alert-message-icon-error.png");
+    }
+    .icon-load {
+        @extend .icon-success;
+        background-image: url("../images/alert-message-icon-load.png");
+    }
+}
+
+.confirm{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 2000;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border-radius: pxTorem(5px);
+    max-width: 500px;
+    width: 70%;
+    background-color: #fff;
+    > .hd{
+        @include clearfix;
+        padding: pxTorem(15px);
+        .close{
+            float: right;
+        }
+    }
+    > .bd{
+        text-align: center;
+        h2{
+            margin: pxTorem(-20px) 0 pxTorem(10px);
+            padding: 0 pxTorem(25px);
+        }
+        p{
+            margin: pxTorem(20px) 0;
+            padding: 0 pxTorem(15px);
+            line-height: pxTorem(25px);
+            color: $light-gray;
+        }
+        .img-select{
+            img{
+                width: pxTorem(150px);
+            }
+        }
+        .img-atte{
+            margin: pxTorem(-20px) 0 pxTorem(40px);
+            img{
+                width: pxTorem(154px);
+            }
+        }
+    }
+    > .fd{
+        display: table;
+        table-layout: fixed;
+        border-top: $border-color solid 1px;
+        border-radius: 0 0 pxTorem(5px) pxTorem(5px);
+        width: 100%;
+        > .item{
+            display: table-cell;
+            border-right: $border-color solid 1px;
+            &:first-child{
+                .btn-block{
+                    border-bottom-right-radius: 0;
+                }
+            }
+            &:last-child{
+                border-right: 0;
+                .btn-block{
+                    border-bottom-left-radius: 0;
+                }
+            }
+        }
+        .btn-block{
+            border: 0;
+            font-size: pxTorem(16px);
+            color: $gray;
+            background-color: transparent;
+        }
+        .btn-primary{
+            color: #a86a04;
+        }
+    }
+}
+
+// slide window
+.side-menu{
+    position: fixed;
+    left: 0;
+    right: 30%;
+    top: 0;
+    bottom: 0;
+    z-index: 2002;
+    display: none;
+    padding-bottom: pxTorem(56px);
+    background-color: #eee;
+    &.right{
+        left: 30%;
+        right: 0;
+    }
+    .bottom{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        display: table;
+        table-layout: fixed;
+        padding: pxTorem(10px) pxTorem(7px);
+        border-top: $border-color solid 1px;
+        width: 100%;
+        background-color: #fff;
+        .shell{
+            display: table-cell;
+            padding: 0 pxTorem(7px);
+            a{
+                width: 100%;
+            }
+        }
+        a{
+            border-radius: pxTorem(20px);
+        }
+    }
+    .item-list{
+        height: 100%;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+    .ad-bottom{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        img{
+            height: pxTorem(58px);
+        }
+    }
+    .col-3{
+        img{
+            height: pxTorem(89px) !important;
+        }
+    }
+}
+
+.second-menu{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: pxTorem(39px);
+    z-index: 2000;
+    display: none;
+    background-color: #fff;
+}
+
+.confirm-shade{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1999;
+    background-color: rgba(0, 0, 0, 0.6);
+}

@@ -17,7 +17,8 @@ Members模块
 
 2019-01-27 更新
 1）更新主插件
-2）追加 GamPress-Ext 插件，包含一个完整功能的小说网站。暂时不含站点模板。下次整理后更新（需要删掉版权）
+2）追加 GamPress-Ext 插件，包含一个完整功能的小说网站。激活GamPress，GamPress-Ext插件，启用Book功能即可。
+3）追加 GamPress-Game 插件。包含一个H5助力游戏。
 =========================
 ## 安装并激活.
 1)将GamPress目录放置到WordPress的Plugins目录

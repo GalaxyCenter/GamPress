@@ -1,0 +1,86 @@
+@mixin clearfix {
+    *zoom: 1;
+    &:after,
+    &:before {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+        overflow: hidden;
+    }
+}
+
+@mixin hide-text {
+    text-indent: -999em;
+    overflow: hidden;
+    color: transparent;
+}
+
+@mixin text-overflow{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@mixin arrow($size: pxTorem(7px), $rotate: 45deg, $color: #b5b5b5) {
+    border: $color solid;
+    border-width: 1px 1px 0 0;
+    -webkit-transform: rotate($rotate);
+    -moz-transform: rotate($rotate);
+    -ms-transform: rotate($rotate);
+    -o-transform: rotate($rotate);
+    transform: rotate($rotate);
+    width: $size;
+    height: $size;
+}
+
+@mixin delta($type, $length, $height, $color) {
+    border-style: solid;
+    width: 0;
+    height: 0;
+    @if ($type == 'up') {
+        border-width: 0 $length/2 $height $length/2;
+        border-color: transparent transparent $color transparent;
+    } @else if ($type == 'down') {
+        border-width: $height $length/2 0 $length/2;
+        border-color: $color transparent transparent transparent;
+    } @else if ($type == 'left') {
+        border-width: $length/2 0 $length/2 $height;
+        border-color: transparent transparent transparent $color;
+    } @else if ($type == 'right') {
+        border-width: $length/2 $height $length/2 0;
+        border-color: transparent $color transparent transparent;
+    }
+}
+
+@mixin adorn-line($distance: pxTorem(80px), $color: $border-color, $width: pxTorem(35px)){
+    position: relative;
+    text-align: center;
+    &:before{
+        position: absolute;
+        right: 50%;
+        top: 50%;
+        -webkit-transform: translate(-$distance, -50%);
+        -moz-transform: translate(-$distance, -50%);
+        -ms-transform: translate(-$distance, -50%);
+        -o-transform: translate(-$distance, -50%);
+        transform: translate(-$distance, -50%);
+        border-top: $color solid 1px;
+        width: $width;
+        content: '';
+    }
+    &:after{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate($distance, -50%);
+        -moz-transform: translate($distance, -50%);
+        -ms-transform: translate($distance, -50%);
+        -o-transform: translate($distance, -50%);
+        transform: translate($distance, -50%);
+        border-top: $color solid 1px;
+        width: $width;
+        content: '';
+    }
+}

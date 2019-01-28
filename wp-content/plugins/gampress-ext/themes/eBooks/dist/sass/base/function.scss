@@ -1,0 +1,5 @@
+$browser-default-font-size: 18px !default;
+
+@function pxTorem($px) {
+    @return $px / $browser-default-font-size * 1rem;
+}

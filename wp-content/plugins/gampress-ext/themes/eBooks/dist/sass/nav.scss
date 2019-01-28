@@ -1,0 +1,118 @@
+.nav-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1999;
+    display: table;
+    border-top: #bfbfbf solid 1px;
+    table-layout: fixed;
+    width: 100%;
+    height: pxTorem(50px);
+    background-color: #fafafa;
+    > .item {
+        display: table-cell;
+        text-align: center;
+        font-size: pxTorem(10px);
+        color: $light-gray;
+        &.active {
+            color: $theme-color;
+        }
+        i {
+            margin-top: pxTorem(7px);
+        }
+    }
+}
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: table;
+    table-layout: fixed;
+    border-bottom: $border-color solid 1px;
+    width: 100%;
+    height: pxTorem(44px);
+    background-color: #fff;
+    > .item {
+        display: table-cell;
+        border-bottom: #fff solid 2px;
+        line-height: pxTorem(41px);
+        text-align: center;
+        &.active {
+            border-color: $theme-color;
+        }
+    }
+}
+
+.menu-box{
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+}
+
+.menu{
+    position: relative;
+    z-index: 2001;
+    display: table;
+    table-layout: fixed;
+    border-bottom: $border-color solid 1px;
+    padding: pxTorem(10px) 0;
+    width: 100%;
+    background-color: #fff;
+    > .item{
+        display: table-cell;
+        border-left: $border-color solid 1px;
+        text-align: center;
+        &.active{
+            position: relative;
+            color: $theme-color;
+            &:after{
+                position: absolute;
+                left: 50%;
+                bottom: pxTorem(-10px);
+                -webkit-transform: translate(-50%, 0);
+                -moz-transform: translate(-50%, 0);
+                -ms-transform: translate(-50%, 0);
+                -o-transform: translate(-50%, 0);
+                transform: translate(-50%, 0);
+                width: pxTorem(60px);
+                height: 1px;
+                content: '';
+                background-color: $theme-color;
+            }
+        }
+        &:first-child{
+            border-left: 0;
+        }
+    }
+    i{
+        color: $gray;
+    }
+}
+
+.btn-bar{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1999;
+    display: table;
+    border-top: #bfbfbf solid 1px;
+    padding: 0 pxTorem(15px);
+    table-layout: fixed;
+    width: 100%;
+    height: pxTorem(50px);
+    background-color: #fafafa;
+    > .item{
+        display: table-cell;
+        padding: pxTorem(5px) 0;
+        &:first-child{
+            padding-right: pxTorem(7px);
+        }
+        &:last-child{
+            padding-left: pxTorem(7px);
+        }
+        .btn-block{
+            border-radius: pxTorem(20px);
+        }
+    }
+}

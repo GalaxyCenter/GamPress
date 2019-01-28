@@ -1,0 +1,33 @@
+.foot {
+    margin-top: pxTorem(10px);
+    margin-bottom: pxTorem(60px);
+    border-top: $border-color solid 1px;
+    border-bottom: $border-color solid 1px;
+    padding: pxTorem(20px) pxTorem(15px);
+    text-align: center;
+    color: $light-gray;
+    background-color: #fff;
+    &.fixed {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    a {
+        margin: 0 pxTorem(10px);
+        color: $light-gray;
+    }
+    .active {
+        color: $dark-gray;
+    }
+    p {
+        margin-top: pxTorem(10px);
+        font-size: pxTorem(12px);
+    }
+    .c {
+        margin: pxTorem(10px) 0;
+    }
+    .qrcode {
+        width: pxTorem(100px);
+    }
+}

@@ -1,0 +1,125 @@
+.head-m {
+    @include clearfix;
+    padding: 0 pxTorem(45px);
+    text-align: center;
+    background-color: $theme-color;
+    &.z2001 {
+        position: relative;
+        z-index: 2001;
+    }
+    a {
+        display: inline-block;
+        padding: pxTorem(11px) 0;
+        i {
+            vertical-align: top;
+        }
+    }
+    .r {
+        margin-right: pxTorem(-45px);
+        padding-right: pxTorem(15px);
+    }
+    .l {
+        margin-left: pxTorem(-45px);
+        padding-left: pxTorem(15px);
+    }
+    img {
+        margin-top: pxTorem(7px);
+        width: pxTorem(88px);
+    }
+    .user{
+        position: relative;
+        span{
+            position: absolute;
+            right: pxTorem(1px);
+            top: pxTorem(10px);
+            border-radius: 50%;
+            width: pxTorem(7px);
+            height: pxTorem(7px);
+            background-color: $red;
+        }
+    }
+}
+
+
+
+.head-s {
+    @include clearfix;
+    padding: 0 pxTorem(74px) 0 pxTorem(45px);
+    background-color: $theme-color;
+    &.transparent {
+        background-color: transparent;
+    }
+    a {
+        display: inline-block;
+        padding: pxTorem(11px) 0;
+        i {
+            vertical-align: top;
+        }
+    }
+    >.r {
+        margin-right: pxTorem(-74px);
+        padding-right: pxTorem(15px);
+        .l {
+            margin-left: pxTorem(15px);
+        }
+    }
+    >.l {
+        margin-left: pxTorem(-45px);
+        padding-left: pxTorem(15px);
+    }
+    h3 {
+        @include text-overflow;
+        line-height: pxTorem(44px);
+        color: #5c2824;
+    }
+}
+
+.head-search {
+    @include clearfix;
+    position: relative;
+    padding: 0 pxTorem(55px) 0 pxTorem(15px);
+    color: #92770a;
+    background-color: $theme-color;
+    &.head-pre {
+        padding-left: pxTorem(45px);
+        .fa-search {
+            left: pxTorem(53px);
+        }
+        >.l {
+            display: inline-block;
+            padding: pxTorem(11px) 0;
+            margin-left: pxTorem(-45px);
+            padding-left: pxTorem(15px);
+            height: pxTorem(44px);
+        }
+    }
+    .r {
+        display: inline-block;
+        margin-right: pxTorem(-40px);
+        line-height: pxTorem(44px);
+        color: #5c2824;
+    }
+    .txt {
+        margin-top: pxTorem(7px);
+        border: 0;
+        border-radius: pxTorem(15px);
+        padding: 0 pxTorem(30px);
+        width: 100%;
+        line-height: pxTorem(30px);
+        background-color: #ffe483;
+    }
+    .fa-search {
+        position: absolute;
+        left: pxTorem(25px);
+        top: pxTorem(13px);
+        font-size: pxTorem(16px);
+    }
+    .del {
+        display: none;
+        position: absolute;
+        top: pxTorem(11px);
+        right: pxTorem(65px);
+        font-size: pxTorem(16px);
+        color: #92770a;
+    }
+}
